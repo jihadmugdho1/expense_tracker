@@ -55,8 +55,8 @@ dependencies:
   iconsax: ^0.0.8
   flutter_launcher_icons: ^0.14.4
   video_player: ^2.9.2
-  json_annotation: ^4.11.0
-  flutter_easyloading: ^3.0.5
+
+
  
 
 
@@ -73,7 +73,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
   build_runner: ^2.4.15
-  json_serializable: ^6.13.2
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

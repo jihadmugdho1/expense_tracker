@@ -1,0 +1,26 @@
+PARSE METHODS
+─────────────────────────────────────────────────────────────
+parseObject<T>(data, fromJson)          Map       → ApiResponse<T>
+parseList<T>(data, fromJson)            List      → ApiResponse<List<T>>
+parseFromString<T>(string, fromJson)    String    → ApiResponse<T>
+parseListFromString<T>(string, fromJson)String    → ApiResponse<List<T>>
+
+FIELD METHODS
+─────────────────────────────────────────────────────────────
+getField<T>(json, key)                  required  → T        (throws if missing)
+getNullableField<T>(json, key)          nullable  → T?       (null if missing)
+getFieldWithDefault<T>(json, key, def)  default   → T        (default if missing)
+getNestedObject<T>(json, key, fromJson) nested    → T?       (null if missing)
+getNestedList<T>(json, key, fromJson)   nested    → List<T>  (empty if missing)
+
+ENCODE METHODS
+─────────────────────────────────────────────────────────────
+encode(json)                            Map → compact JSON string
+encodePretty(json)                      Map → indented JSON string
+
+RESPONSE
+─────────────────────────────────────────────────────────────
+response.isSuccess                      true / false
+response.data                           your model (if success)
+response.error                          error message (if failed)
+response.when(onSuccess, onError)       handle both cases inline
