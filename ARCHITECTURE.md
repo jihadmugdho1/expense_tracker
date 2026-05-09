@@ -1,14 +1,14 @@
-# Petzy — Architecture & Engineering Guide
+# Flutter GetX Template (petzy_optimized) — Architecture & Engineering Guide
 
-This document is the single source of truth for **how** Petzy is built. It
-complements [README.md](README.md) (which covers **what** the app is and
-how to run it) by explaining the layering, conventions, and extension
+This document is the single source of truth for **how** this repository is
+built. It complements [README.md](README.md) (which covers **what** the app
+is and how to run it) by explaining the layering, conventions, and extension
 points contributors are expected to follow.
 
-> TL;DR — Petzy uses a **feature-first, GetX-driven** layout. A small
-> `core/` package provides cross-cutting services (network, storage,
-> theming, sizing) and every vertical feature lives in its own folder
-> under `lib/features/`.
+> TL;DR — This repo uses a **feature-first, GetX-driven** layout. A small
+> `core/` package provides cross-cutting services (network, storage, theming,
+> sizing) and every vertical feature lives in its own folder under
+> `lib/features/`.
 
 ---
 
@@ -74,7 +74,7 @@ Guiding principles:
 ## Repository layout
 
 ```
-petzy_optimized/
+flutter_tamplate/
 ├── android/              # Android native project
 ├── ios/                  # iOS native project
 ├── linux/  macos/  web/  windows/   # Scaffolded desktop/web targets
@@ -100,11 +100,12 @@ lib/
 │   ├── bindings/
 │   │   └── controller_binder.dart       # Initial DI bindings
 │   ├── common/
-│   │   ├── styles/
-│   │   │   └── global_text_style.dart   # AppTextStyle helper
-│   │   └── widgets/                     # Shared widgets (buttons, cards…)
+│   │   ├── common_button/               # Reusable CommonButton
+│   │   └── styles/
+│   │       └── global_text_style.dart   # AppTextStyle helper
 │   ├── controllers/
 │   │   └── theme_controller.dart        # Persistent theme mode
+│   ├── json/                            # Generic JSON parsing helpers
 │   ├── localization/
 │   │   └── app_localizations.dart       # (placeholder — i18n)
 │   ├── models/
@@ -112,7 +113,10 @@ lib/
 │   ├── services/
 │   │   ├── cache/storage_service.dart   # SharedPreferences wrapper
 │   │   ├── firebase/                    # (disabled — FCM / notifications)
-│   │   └── network/network_caller.dart  # Dio-based HTTP client
+│   │   └── network/                     # Network + connectivity helpers
+│   │       ├── network_caller.dart      # Dio-based HTTP client
+│   │       ├── internet_service.dart    # Connectivity monitoring
+│   │       └── error_funtionality.dart  # InternetToastListener widget
 │   ├── utils/
 │   │   ├── constants/                   # Colors, enums, paths, sizer, texts
 │   │   ├── device/device_utility.dart   # Screen / platform helpers
@@ -125,20 +129,9 @@ lib/
 │   └── datetime_formate.dart            # Relative-time formatter
 │
 ├── features/                            # Vertical feature modules
-│   ├── splash/
-│   ├── authentication/
-│   ├── bottom_nav/
-│   ├── feed/
-│   ├── reels/
-│   ├── community/
-│   ├── booking/
-│   ├── profile/
-│   ├── settings/
-│   ├── guest_user/
-│   └── service_providers/
-│       ├── petcare_service/
-│       ├── pethotel_service/
-│       └── petschool_service/
+│   ├── splash/                          # Splash screen + timer redirect
+│   ├── bottom_nav/                      # Bottom nav shell + placeholder tabs
+│   └── authentication/                  # Placeholder login screen + models
 │
 └── routes/
     └── app_routes.dart                  # Named route table
@@ -161,16 +154,17 @@ features/<feature_name>/
 ```
 
 > **Historical note:** the existing code uses the misspelled folder name
-> `presentaion/` in some modules. New modules should use `presentation/`.
-> Existing folders may be renamed opportunistically — do not rename in
-> the same PR as unrelated work.
+> `presentaion/` in some modules (`splash`, `bottom_nav`). New modules
+> should use `presentation/`. Rename existing folders only in a focused
+> PR because it is a wide import-path change.
 
 Rules:
 
 - Controllers expose **observables** (`RxT`, `Rx<T>`, `RxList<T>`) and
   pure methods. They must not touch `BuildContext`.
 - Widgets only import from their own feature + `core/`. If two features
-  need the same widget, lift it into `core/common/widgets/`.
+  need the same widget, lift it into `core/common/` (create a
+  `core/common/widgets/` folder if needed).
 - Services translate models ↔ HTTP via `NetworkCaller`. They do not
   store state.
 
@@ -182,6 +176,7 @@ Rules:
 // lib/main.dart
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await StorageService.init();
   Get.put<ThemeController>(ThemeController(), permanent: true);
   runApp(const MyApp());
 }
@@ -204,7 +199,7 @@ WebSocket connection, analytics — should be invoked from `main` before
 
 ## State management (GetX)
 
-Petzy uses GetX in three roles:
+This repo uses GetX in three roles:
 
 | Role | API | Example |
 |------|-----|---------|
@@ -294,8 +289,8 @@ All HTTP traffic passes through
 - Singleton `NetworkCaller` wraps `Dio`.
 - 30 s connect + receive timeouts.
 - Automatically attaches the bearer token from `StorageService`.
-- Auto-retries once after token refresh on `401` — except for the auth
-  endpoints (`/auth/login/`, `/auth/register/`, `/auth/logout/`,
+- Auto-retries once after token refresh on `401` (when `tokenRefresher` is wired)
+  — except for the auth endpoints (`/auth/login/`, `/auth/register/`, `/auth/logout/`,
   `/auth/token/refresh/`).
 - Returns a uniform envelope — [ResponseData](lib/core/models/response_data.dart):
 
@@ -308,13 +303,14 @@ class ResponseData {
 }
 ```
 
-Feature services stay thin:
+Feature services stay thin (example):
 
 ```dart
 class FeedService {
   final _api = NetworkCaller();
-  Future<ResponseData> getFeed() => _api.get('/feed/');
-  Future<ResponseData> like(String id) => _api.post('/feed/$id/like/', {});
+  Future<ResponseData> getFeed() => _api.getRequest('/feed/');
+  Future<ResponseData> like(String id) =>
+      _api.postRequest('/feed/$id/like/', body: {});
 }
 ```
 
@@ -335,6 +331,11 @@ Use this service for any small, primitive, non-sensitive value. For
 larger structured data (offline cache, drafts, etc.) introduce a proper
 solution (Hive / sqflite / drift) behind a new service in
 `core/services/`.
+
+Important:
+
+- `StorageService.init()` must run before reading `StorageService.token/userId`.
+  This repo calls it in `lib/main.dart`.
 
 ## Theming & design tokens
 
@@ -457,7 +458,7 @@ into `main.dart` / `app.dart`, and update this document.
 
 **iOS** — [ios/Runner/Info.plist](ios/Runner/Info.plist)
 
-- `CFBundleDisplayName` = `Petzy Optimized`.
+- App display name is configured in `CFBundleDisplayName`.
 - Bundle id is driven by `PRODUCT_BUNDLE_IDENTIFIER` in the Xcode
   project.
 - Portrait + landscape are enabled for iPhone; iPad supports all four
@@ -469,7 +470,8 @@ into `main.dart` / `app.dart`, and update this document.
 
 ### Dart / Flutter
 
-- Keep the analyzer clean: `flutter analyze` must report **no** issues.
+- Keep the analyzer clean: aim for `flutter analyze` to report **no** issues.
+  Fix any new warnings as you touch related code.
   The lint set lives in [analysis_options.yaml](analysis_options.yaml).
 - `const` everything that can be `const`.
 - File names: `snake_case.dart`. Class names: `UpperCamelCase`.
