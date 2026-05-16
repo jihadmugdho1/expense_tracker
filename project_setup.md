@@ -9,7 +9,7 @@ rename setBundleId --targets android --value com.yourcompany.applogo
 
 # Change iOS Bundle ID
 rename setBundleId --targets ios --value com.yourcompany.applogo
-# sjdisidjiadi
+
 # change app icon 
 dart run flutter_launcher_icons:generate
 dart run flutter_launcher_icons
