@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:petzy_optimized/features/bottom_nav/controllers/bottom_nav_controller.dart';
+import 'package:flutter_tamplate/features/bottom_nav/controllers/bottom_nav_controller.dart';
 
 class BottomNavScreen extends StatelessWidget {
   const BottomNavScreen({super.key});

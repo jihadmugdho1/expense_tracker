@@ -3,8 +3,9 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
-import 'package:petzy_optimized/core/models/response_data.dart';
-import 'package:petzy_optimized/core/services/cache/storage_service.dart';
+
+import 'package:flutter_tamplate/core/services/cache/storage_service.dart';
+import 'package:flutter_tamplate/core/models/response_data.dart';
 
 // ============================================================================
 // Constants

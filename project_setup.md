@@ -1,7 +1,7 @@
 Project Initial Setup Commands
 
 # Change App Name
-dart run rename_app:main all="AppLogo"
+dart run rename_app:main all="flutter_tamplate"
 
 # Change Android Bundle ID
 dart pub global activate rename

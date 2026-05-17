@@ -477,7 +477,7 @@ into `main.dart` / `app.dart`, and update this document.
 - File names: `snake_case.dart`. Class names: `UpperCamelCase`.
   Members: `lowerCamelCase`.
 - No relative imports that cross package boundaries — use
-  `package:petzy_optimized/...` for long paths.
+  `package:flutter_tamplate/...` for long paths.
 - No hard-coded strings in production UI. Define them in
   [app_texts.dart](lib/core/utils/constants/app_texts.dart) today, move
   them into ARB files once i18n is wired up.

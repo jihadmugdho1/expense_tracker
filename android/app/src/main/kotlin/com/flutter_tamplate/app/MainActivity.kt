@@ -1,4 +1,4 @@
-package com.example.petzy_optimized
+package com.flutter_tamplate.app
 
 import io.flutter.embedding.android.FlutterActivity
 

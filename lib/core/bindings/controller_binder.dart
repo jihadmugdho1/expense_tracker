@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:petzy_optimized/core/services/network/internet_service.dart';
-import 'package:petzy_optimized/features/authentication/controllers/auth_controller.dart';
-import 'package:petzy_optimized/features/splash/controllers/splash_controller.dart';
+import 'package:flutter_tamplate/core/services/network/internet_service.dart';
+import 'package:flutter_tamplate/features/authentication/controllers/auth_controller.dart';
+import 'package:flutter_tamplate/features/splash/controllers/splash_controller.dart';
 
 class ControllerBinder extends Bindings {
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:petzy_optimized/core/services/network/error_funtionality.dart';
+import 'package:flutter_tamplate/core/services/network/error_funtionality.dart';
 import 'core/bindings/controller_binder.dart';
 import 'core/controllers/theme_controller.dart';
 import 'core/utils/theme/theme.dart';
