@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:flutter_tamplate/routes/app_routes.dart';
+import 'package:expensetracker/routes/app_routes.dart';
 
 class SplashController extends GetxController {
   @override

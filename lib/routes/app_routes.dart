@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:flutter_tamplate/features/authentication/presentation/screens/login_screen.dart';
-import 'package:flutter_tamplate/features/bottom_nav/presentaion/UI/bottom_nav_screen.dart';
-import 'package:flutter_tamplate/features/splash/presentaion/UI/splash_screen.dart';
+import 'package:expensetracker/features/authentication/presentation/screens/login_screen.dart';
+import 'package:expensetracker/features/bottom_nav/presentaion/UI/bottom_nav_screen.dart';
+import 'package:expensetracker/features/splash/presentaion/UI/splash_screen.dart';
 
 class AppRoute {
   static const String loginScreen = "/loginScreen";

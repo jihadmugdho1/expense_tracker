@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tamplate/core/controllers/theme_controller.dart';
-import 'package:flutter_tamplate/core/core.dart';
+import 'package:expensetracker/core/controllers/theme_controller.dart';
+import 'package:expensetracker/core/core.dart';
 import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 

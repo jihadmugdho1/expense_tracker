@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tamplate/core/common/styles/global_text_style.dart';
-import 'package:flutter_tamplate/core/utils/constants/colors.dart';
+import 'package:expensetracker/core/common/styles/global_text_style.dart';
+import 'package:expensetracker/core/utils/constants/colors.dart';
 
 class ProElevatedButton extends StatelessWidget {
   // ACTION

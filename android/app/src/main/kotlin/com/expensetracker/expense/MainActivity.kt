@@ -1,4 +1,4 @@
-package com.flutter_tamplate.app
+package com.expensetracker.expense
 
 import io.flutter.embedding.android.FlutterActivity
 

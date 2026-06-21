@@ -4,8 +4,8 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 
 
-import 'package:flutter_tamplate/core/services/cache/storage_service.dart';
-import 'package:flutter_tamplate/core/models/response_data.dart';
+import 'package:expensetracker/core/services/cache/storage_service.dart';
+import 'package:expensetracker/core/models/response_data.dart';
 
 // ============================================================================
 // Constants

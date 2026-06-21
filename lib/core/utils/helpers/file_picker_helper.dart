@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_tamplate/core/utils/constants/enums.dart';
+import 'package:expensetracker/core/utils/constants/enums.dart';
 
 class MediaPicker {
   static final ImagePicker _picker = ImagePicker();

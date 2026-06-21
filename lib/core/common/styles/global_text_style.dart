@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tamplate/core/utils/constants/colors.dart';
-import 'package:flutter_tamplate/core/utils/constants/sizer.dart';
+import 'package:expensetracker/core/utils/constants/colors.dart';
+import 'package:expensetracker/core/utils/constants/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class AppTextStyle {

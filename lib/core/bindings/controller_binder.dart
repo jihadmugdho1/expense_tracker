@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:flutter_tamplate/core/services/network/internet_service.dart';
-import 'package:flutter_tamplate/features/authentication/controllers/auth_controller.dart';
-import 'package:flutter_tamplate/features/splash/controllers/splash_controller.dart';
+import 'package:expensetracker/core/services/network/internet_service.dart';
+import 'package:expensetracker/features/authentication/controllers/auth_controller.dart';
+import 'package:expensetracker/features/splash/controllers/splash_controller.dart';
 
 class ControllerBinder extends Bindings {
   @override

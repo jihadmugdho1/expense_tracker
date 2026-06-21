@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_tamplate/core/utils/constants/enums.dart';
+import 'package:expensetracker/core/utils/constants/enums.dart';
 import 'package:sizer/sizer.dart' show Device, ScreenType;
 
 export 'package:sizer/sizer.dart' show Sizer, Device, ScreenType;
